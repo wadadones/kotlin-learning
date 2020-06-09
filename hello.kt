@@ -50,7 +50,7 @@ open class Person {
 }
 
 class PersonDetail(override val firstName: String, override val lastName: String, override var age: Int) : Person(firstName, lastName, age) {
-
+  // プライマリコンストラクタの引数＝プロパティの定義と認識してしまって良い？
   // overrideとopenがセットになって必要
 }
     
