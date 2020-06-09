@@ -21,25 +21,22 @@ fun main(args: Array<String>) {
   println(k)
 
   var person = Person("michael", "johnson", 34)
-  println(person.getFullName())
+  println(person.fullName)
+
+  var person2 = PersonWithPrimaryConstructor("mark", "john")
+  println(person2.info)
+
+  var personDetail = PersonDetail("sdf", "sdfs", 3)
+  println(personDetail)
 
 
 }
 
 
-// class Person(var name: String) {
-//   init {
-//     name += "xxx"
-//   }
-//   fun print() {
-//     println("sdfsdfs" + name)
-//   }  
-// }
-
-class Person {
-  val firstName: String
-  val lastName: String
-  var age: Int
+open class Person {
+  open val firstName: String
+  open val lastName: String
+  open var age: Int
 
 // 'val' on secondary constructor parameter is not allowed <- secondary constructorの引数にvalをつけるとこうなる
   constructor(firstName: String, lastName: String, age: Int) {
@@ -48,7 +45,27 @@ class Person {
     this.age = age
   }
 
-  fun getFullName(): String {
-    return firstName + " " + lastName
-  }
+  val fullName: String
+    get() = firstName + " " + lastName
+}
+
+class PersonDetail(override val firstName: String, override val lastName: String, override var age: Int) : Person(firstName, lastName, age) {
+
+  // overrideとopenがセットになって必要
+}
+    
+
+  // fun getFullName(): String {
+  //   return firstName + " " + lastName
+  // }
+
+class PersonWithPrimaryConstructor(val firstName: String, val lastName: String, var age: Int = 0) {
+  // error: property must be initialized or be abstract
+  // 定義したプロパティはちゃんとinitialze or abstractにしないといけない？
+  val info: String
+  get() = firstName + "_" + lastName + "_" + age
+  
+  // fun info(): String {
+  //   return firstName + "_" + lastName + "_" + age
+  // }
 }
